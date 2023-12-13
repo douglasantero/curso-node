@@ -1,6 +1,10 @@
 import http from 'node:http'
+import { randomUUID } from 'node:crypto'
 import { Database } from './database.js'
 import { json } from './middleware/json.js'
+
+// UUID => Unique Universal ID
+
 
 const database = new Database
 
@@ -10,7 +14,7 @@ const server = http.createServer(async (req, res) => {
     await json(req, res)
   
     if( method === 'GET' && url === '/users' ) {
-      const users = datavase.select('users')
+      const users = database.select('users')
       
       return res
         .end(JSON.stringify(users))
@@ -20,7 +24,7 @@ const server = http.createServer(async (req, res) => {
       const { name, email } = req.body
 
       const user = {
-        id: 1,
+        id: randomUUID(),
         name,
         email,
       }
