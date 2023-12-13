@@ -1,4 +1,5 @@
 import { Readable } from 'node:stream'
+import fs from 'node:fs/promises'
 
 class OneToHundredStream extends Readable {
   index = 1
