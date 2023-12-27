@@ -18,14 +18,24 @@ export class Database {
 
   #persist() {
     fs.writeFile(databasePath, JSON.stringify(this.#database))
-
   }
 
-  select(table) {
-    const data = this.#database[table] ?? []
- 
+  select(table, search) {
+    let data = this.#database[table] ?? []
+
+    if (search) {
+      data = data.filter(row => {
+        return Object.entries(search).some(([key, value]) => {
+          if (!value) return true
+
+          return row[key].includes(value)
+        })
+      })
+    }
+
     return data
   }
+
 
   insert(tabela, data) {
     if (Array.isArray(this.#database[table])){
@@ -38,4 +48,25 @@ export class Database {
 
     return data;
   }
+
+  update(table, id, data) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+    
+    if (rowIndex > -1) {
+      this.#database[table][rowIndex] = { id, ...data }
+      this.#persist()
+    }
+  }
+  delete(table, id) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+    // Percorre cada um dos registros(cada item que tem dentro do array), 
+    // procurando se existe um usuario que tenha o id igual ao id que eu estou
+    // busacando, se existir ele irá me informar qual o indice dessa informação
+    
+    if (rowIndex > -1) {
+      this.#database[table].splice(rowIndex, 1)
+      this.#persist()
+    }
+
+}
 }
