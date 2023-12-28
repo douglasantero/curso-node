@@ -2,13 +2,12 @@ import fs from 'node:fs/promises'
 
 const databasePath = new URL('../db.json', import.meta.url)
 
-console.log(databasePath)
-
 export class Database {
   #database = {}
 
-  constructor(){
-    fs.readFile(databasePath, 'utf-8').then(data => {
+  constructor() {
+    fs.readFile(databasePath, 'utf-8')
+    .then(data => {
       this.#database = JSON.parse(data)
     })
     .catch(() => {
@@ -17,7 +16,7 @@ export class Database {
   }
 
   #persist() {
-    fs.writeFile(databasePath, JSON.stringify(this.#database))
+    fs.writeFile(databasePath, JSON.stringify(this.#database, null, 2))
   }
 
   select(table, search) {
@@ -28,7 +27,7 @@ export class Database {
         return Object.entries(search).some(([key, valeu]) => {
           if (!value) return true
 
-          return row [key].include(value)
+          return row [key].includes(value)
         })
        })
     }
@@ -36,12 +35,25 @@ export class Database {
     return data;
   }
 
+  insert(table, data) {
+    if (Array.isArray(this.#database[table])) {
+      this.#database[table].push(data)
+    } else {
+      this.#database[table] = [data]
+    }
+
+    this.#persist()
+
+    return data
+  }
+
 
   update(table, id, data) {
-    const rowIndex = this.#database[table].findIndex(rowIndex)(row => row.id === id)
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
-      this.#database[table.splice(rowIndex, 1)]
+      const row = this.#database[table][rowIndex]
+      this.#database[table][rowIndex] = { id, ...row, ...data}
       this.#persist()
     }
   }
@@ -52,7 +64,6 @@ export class Database {
     if (rowIndex > -1) {
       this.#database[table].splice(rowIndex, 1)
       this.#persist
-    }
-    
+    }  
   }
 }

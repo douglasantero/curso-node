@@ -9,7 +9,7 @@ const { method, url } = req
 
   await json(req, res)
 
-  const routes = routes.find(route =>{
+  const route = routes.find(route =>{
     return route.method === method && route.path.test === (url)
   })
 
