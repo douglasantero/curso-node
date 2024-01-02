@@ -6,13 +6,13 @@ export class Database {
   #database = {}
 
   constructor() {
-    fs.readFile(databasePath, 'utf-8')
-    .then(data => {
-      this.#database = JSON.parse(data)
-    })
-    .catch(() => {
-      this.#persist()
-    })
+    fs.readFile(databasePath, 'utf8')
+      .then(data => {
+        this.#database = JSON.parse(data)
+      })
+      .catch(() => {
+        this.#persist()
+      })
   }
 
   #persist() {
@@ -23,16 +23,16 @@ export class Database {
     let data = this.#database[table] ?? []
 
     if (search) {
-       data = data.filter(row => {
-        return Object.entries(search).some(([key, valeu]) => {
+      data = data.filter(row => {
+        return Object.entries(search).some(([key, value]) => {
           if (!value) return true
 
-          return row [key].includes(value)
+          return row[key].includes(value)
         })
-       })
+      })
     }
 
-    return data;
+    return data
   }
 
   insert(table, data) {
@@ -47,23 +47,22 @@ export class Database {
     return data
   }
 
-
   update(table, id, data) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
       const row = this.#database[table][rowIndex]
-      this.#database[table][rowIndex] = { id, ...row, ...data}
+      this.#database[table][rowIndex] = { id, ...row, ...data }
       this.#persist()
     }
   }
 
-  delete (table, id) {
-    const rowIndex = this.#database[table].findIndex(row => row.id ===id)
+  delete(table, id) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
       this.#database[table].splice(rowIndex, 1)
-      this.#persist
-    }  
+      this.#persist()
+    }
   }
 }
