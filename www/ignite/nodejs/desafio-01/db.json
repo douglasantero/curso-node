@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "id": "2b153fc7-e81a-49fd-85b5-7532a2999ff0",
+      "title": "Dever de casa",
+      "description": "Realizar os deveres de casa",
+      "completed_at": null,
+      "created_at": "2024-01-02T17:25:03.310Z",
+      "updated_at": "2024-01-02T17:25:03.310Z"
+    }
+  ]
+}

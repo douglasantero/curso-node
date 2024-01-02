@@ -1,6 +1,6 @@
 import http from 'node:http'
 
-import { json } from './middlewares/json.js'
+import { json } from './middleware/json.js'
 import { routes } from './routes.js'
 import { extractQueryParams } from './utils/extract-query-params.js'
 
@@ -27,4 +27,4 @@ const server = http.createServer(async (req, res) => {
   return res.writeHead(404).end()
 })
 
-server.listen(4343)
+server.listen(3333)
