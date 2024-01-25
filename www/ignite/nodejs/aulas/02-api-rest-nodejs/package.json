@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "knex": "node --no-warnings tsx ./node_mod/.bin/knex",
-    "lint": "eslint src -e .ts --fix"
+    "knex": "node --no-warnings tsx ./node_modules/.bin/knex",
+    "lint": "eslint src --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
