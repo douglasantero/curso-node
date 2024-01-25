@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "knex": "node --no-warnings --loader tsx ./node_modules/.bin/knex",
+    "knex": "node --no-warnings tsx ./node_modules/.bin/knex",
     "lint": "eslint src -e .ts --fix"
   },
   "keywords": [],
@@ -13,7 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
-    "@types/node": "^20.10.7",
+    "@types/node": "^18.13.0",
     "eslint": "^8.56.0",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
